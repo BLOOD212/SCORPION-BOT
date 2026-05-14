@@ -36,7 +36,7 @@ let handler = async (m, { conn, args, isOwner }) => {
 *🔓 Azione:* Unban accesso bot
 *📅 Data:* ${new Date().toLocaleString('it-IT')}
 
-> vare ✧ bot`)
+> Blood ✧ bot`)
 }
 
 handler.help = ['unbangp']
