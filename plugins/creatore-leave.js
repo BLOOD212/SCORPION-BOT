@@ -12,7 +12,7 @@ let handler = async (m, { conn, text, command }) => {
   
   // Design Estetico BLD-BLOOD
   let leaveMessage = `
-┏━━━━━━━〔 🩸 *BLD-BLOOD* 〕━━━━━━━┓
+┏━━━━━━━〔 𝐒𝐂𝚯𝐑𝐏𝐈𝚯𝚴 ꪶ⃬🦂ꫂ  〕━━━━━━━┓
 ┃
 ┃ 👋 *ADDIO GRUPPO*
 ┃
