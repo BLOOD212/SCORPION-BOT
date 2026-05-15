@@ -9,7 +9,7 @@ const handler = async (m, { conn, participants, groupMetadata, usedPrefix }) => 
   
   const groupAdmins = participants.filter((p) => p.admin);
   const listAdmin = groupAdmins.map((v, i) => `│ 『 *${i + 1}* 』 @${v.id.split('@')[0]}`).join('\n');
-  const owner = groupMetadata.owner || groupAdmins.find((p) => p.admin === 'superadmin')?.id || m.chat.split`-`[0] + '@s.whatsapp.net';
+  const owner = groupMetadata.owner || groupAdmins.find((p) => p.admin === 'superadmin')?.id || m.chat.split('-')[0] + '@s.whatsapp.net';
 
   const status = (val) => {
     val = Boolean(val)
@@ -47,11 +47,11 @@ ${listAdmin}
 ${statoFunzioni}
 *╰⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*`.trim();
 
-  await conn.reply(m.chat, text, m, {
-    mentions: [...groupAdmins.map((v) => v.id), owner],
+  await conn.sendMessage(m.chat, {
+    text: text,
     contextInfo: {
-      // Se global.fake esiste prende il contextInfo, altrimenti usa un oggetto vuoto ed evita il crash
-      ...(global.fake?.contextInfo || {}), 
+      ...(global.fake?.contextInfo || {}),
+      mentionedJid: [...groupAdmins.map((v) => v.id), owner],
       externalAdReply: {
         title: `${groupMetadata.subject}`,
         body: `『 👥 』 Membri: ${participants.length}`,
@@ -61,7 +61,7 @@ ${statoFunzioni}
         renderLargerThumbnail: false
       }
     }
-  });
+  }, { quoted: m });
 };
 
 handler.help = ['infogruppo'];
