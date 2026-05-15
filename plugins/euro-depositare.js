@@ -248,7 +248,7 @@ const renderDepositHTML = (props) => {
             <div class="footer-timestamp">${props.timestamp}</div>
         </div>
         
-        <div class="watermark">✧˚🩸 varebot 🕊️˚✧</div>
+        <div class="watermark">𝐒𝐂𝚯𝐑𝐏𝐈𝚯𝚴 ꪶ⃬🦂ꫂ </div>
     </div>
 </body>
 </html>`;
