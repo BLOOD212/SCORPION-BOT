@@ -65,7 +65,7 @@ async function handleViolation(conn, m, reason, isBotAdmin) {
 
     const text = `${header}
 ╭
-┃ 🚨 \`Stato:\` *Protocollo Blood Attivo*
+┃ 🚨 \`Stato:\` *Protocollo Attivo*
 ┃
 ┃ 『 👤 』 \`Target:\` @${sender.split('@')[0]}
 ┃ 『 🚫 』 \`Azione:\` *Messaggio Rimosso*
@@ -79,7 +79,7 @@ async function handleViolation(conn, m, reason, isBotAdmin) {
         mentions: [sender],
         contextInfo: {
             externalAdReply: {
-                title: 'BLOOD SECURITY SYSTEM',
+                title: 'SECURITY',
                 body: 'Link vietato rilevato',
                 thumbnailUrl: 'https://qu.ax/TfUj.jpg',
                 mediaType: 1,
