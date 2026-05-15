@@ -1,39 +1,34 @@
 import { promises } from 'fs'
-import { join } from 'path'
 import { xpRange } from '../lib/levelling.js'
 import moment from 'moment-timezone'
 import os from 'os'
 
-// --- PERCORSO IMMAGINE ---
-const localImg = join(process.cwd(), 'menu-download.jpeg');
-
 const defaultMenu = {
   before: `
-┎━━━━━━━━━━━━━━━━━━━┑
-┃   ✧  𝐁𝐋𝐃 - 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃  ✧  ┃
-┖━━━━━━━━━━━━━━━━━━━┙
-┌───────────────────┐
-  👤 𝚄𝚜𝚎𝚛: %name
-  🕒 𝚄𝚙𝚝𝚒𝚖𝚎: %uptime
-  📥 𝚂𝚝𝚊𝚝𝚞𝚜: 𝚁𝚎𝚊𝚍𝚢
-└───────────────────┘
+   *𝐒𝐂𝚯𝐑𝐏𝐈𝚯𝚴 ꪶ⃬🦂ꫂ*
+   ──────────────
+   *USER:* _%name_
+   *UPTIME:* _%uptime_
+   *DOWNLOAD:* _Ready_
+   ──────────────
 
-*〘 ᴀᴄᴄᴇssɪɴɢ ᴅᴏᴡɴʟᴏᴀᴅ ɴᴏᴅᴇ... 〙*
+   *〔 📥 DOWNLOAD NODE 〕*
+   > _Estrazione media e file..._
 `.trimStart(),
-  header: '┍━━━〔 %category 〕━━━┑',
-  body: '┇ 📥  *%cmd*',
-  footer: '┕━━━━━──ׄ──ׅ──ׄ──━━━━━┙\n',
-  after: `_ʙʟᴅ-ʙᴏᴛ ɴᴇᴛᴡᴏʀᴋ ᴅᴀᴛᴀ_`
+  header: '   *╒══  📥 %category  ══╕*',
+  body: '   ┇ ⌬ %cmd',
+  footer: '   *╘══════════════╛*\n',
+  after: `_Scorpion Net Downloader v3.0_`
 }
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
   let tags = {
-    'download': 'ᴅɪɢɪᴛᴀʟ ᴀssᴇᴛs'
+    'download': '𝐃𝐈𝐆𝐈𝐓𝐀𝐋 𝐀𝐒𝐒𝐄𝐓𝐒'
   }
 
   try {
     await conn.sendPresenceUpdate('composing', m.chat)
-    
+
     let name = await conn.getName(m.sender)
     let _uptime = process.uptime() * 1000
     let uptime = clockString(_uptime)
@@ -70,24 +65,31 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
 
     let text = _text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join('|')})`, 'g'), (_, name) => '' + replace[name])
 
-    await m.react('📥')
+    await m.react('🦂')
 
-    // --- INVIO COME IMMAGINE (SOSTITUITO VIDEO) ---
+    // Invio puro testo ottimizzato
     await conn.sendMessage(m.chat, {
-      image: { url: localImg },
-      caption: text.trim(),
+      text: text.trim(),
       contextInfo: {
         mentionedJid: [m.sender],
+        externalAdReply: {
+          title: "𝐒𝐂𝚯𝐑𝐏𝐈𝚯𝚴 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑 ⚡",
+          body: "Media Retrieval System",
+          mediaType: 1,
+          previewType: 0,
+          sourceUrl: 'https://github.com',
+          renderLargerThumbnail: false
+        },
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363232743845068@newsletter',
-          newsletterName: "✧ 𝙱𝙻𝙳-𝙱𝙾𝚃 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝚁 ✧"
+          newsletterName: "🦂 𝐒𝐂𝚯𝐑𝐏𝐈𝚯𝚴 𝐒𝐘𝐒𝐓𝐄𝐌 🦂"
         }
       }
     }, { quoted: m })
 
   } catch (e) {
     console.error(e)
-    conn.reply(m.chat, '❌ Error in Download Module: Check if menu-download.jpeg exists.', m)
+    conn.reply(m.chat, '🦂 *ERRORE:* Impossibile connettersi al nodo di download.', m)
   }
 }
 
