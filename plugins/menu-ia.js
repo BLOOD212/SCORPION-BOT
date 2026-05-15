@@ -1,8 +1,4 @@
 import { xpRange } from '../lib/levelling.js'
-import { join } from 'path'
-
-// --- PERCORSO IMMAGINE ---
-const localImg = join(process.cwd(), 'menu-ia.jpeg');
 
 const emojicategoria = {
   iatesto: '📝',
@@ -18,29 +14,27 @@ let tags = {
 
 const defaultMenu = {
   before: `
-┎━━━━━━━━━━━━━━━━━━━┑
-┃   ✧  𝐁𝐋𝐃 - 𝐈𝐍𝐓𝐄𝐋𝐋𝐈𝐆𝐄𝐍𝐂𝐄  ✧   ┃
-┖━━━━━━━━━━━━━━━━━━━┙
-┌───────────────────┐
-  👤 𝚄𝚜𝚎𝚛: %name
-  🏆 𝙻𝚟𝚕: %level
-  🪐 𝚄𝚙𝚝𝚒𝚖𝚎: %uptime
-  👥 𝚄𝚜𝚎𝚛𝚜: %totalreg
-└───────────────────┘
+   *𝐒𝐂𝚯𝐑𝐏𝐈𝚯𝚴 ꪶ⃬🦂ꫂ*
+   ──────────────
+   *USER:* _%name_
+   *LVL:* _%level_
+   *UPTIME:* _%uptime_
+   ──────────────
 
-*〘 ᴀᴄᴄᴇssɪɴɢ ɴᴇᴜʀᴀʟ ɴᴇᴛᴡᴏʀᴋ... 〙*
+   *〔 🧠 NEURAL NETWORK 〕*
+   > _Accesso ai nodi cognitivi..._
 `.trimStart(),
-  header: '┍━━━〔 %category 〕━━━┑',
-  body: '┇ %emoji  *%cmd*',
-  footer: '┕━━━━━──ׄ──ׅ──ׄ──━━━━━┙\n',
-  after: `_ꜱʏꜱᴛᴇᴍ ɪᴀ ᴏᴘᴇʀᴀᴛɪᴏɴᴀʟ_`
+  header: '   *╒══  🧠 %category  ══╕*',
+  body: '   ┇ %emoji %cmd',
+  footer: '   *╘══════════════╛*\n',
+  after: `_Scorpion AI Operational v3.0_`
 }
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
   try {
     await conn.sendPresenceUpdate('composing', m.chat)
-    
-    let { level = 0, role = 'User' } = global.db.data.users[m.sender] || {}
+
+    let { level = 0 } = global.db.data.users[m.sender] || {}
     let name = await conn.getName(m.sender) || 'Utente'
     let uptime = clockString(process.uptime() * 1000)
     let totalreg = Object.keys(global.db.data.users).length
@@ -81,24 +75,31 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
 
     let text = _text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join('|')})`, 'g'), (_, name) => '' + replace[name])
 
-    await m.react('🧠')
+    await m.react('🦂')
 
-    // --- INVIO CON IMMAGINE E CONTEXT GRUPPO ---
+    // Invio solo testo con anteprima tecnica
     await conn.sendMessage(m.chat, {
-      image: { url: localImg },
-      caption: text.trim(),
+      text: text.trim(),
       contextInfo: {
         mentionedJid: [m.sender],
+        externalAdReply: {
+          title: "𝐒𝐂𝚯𝐑𝐏𝐈𝚯𝚴 𝐈𝐍𝐓𝐄𝐋𝐋𝐈𝐆𝐄𝐍𝐂𝐄 ⚡",
+          body: "Neural Network Interface",
+          mediaType: 1,
+          previewType: 0,
+          sourceUrl: 'https://github.com',
+          renderLargerThumbnail: false
+        },
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363232743845068@newsletter',
-          newsletterName: "✧ 𝙱𝙻𝙳-𝙱𝙾𝚃 𝙸𝙽𝚃𝙴𝙻𝙻𝙸𝙶𝙴𝙽𝙲𝙴 ✧"
+          newsletterName: "🦂 𝐒𝐂𝚯𝐑𝐏𝐈𝚯𝚴 𝐒𝐘𝐒𝐓𝐄𝐌 🦂"
         }
       }
     }, { quoted: m })
 
   } catch (e) {
     console.error(e)
-    conn.reply(m.chat, '❌ Errore nel caricamento del modulo IA.', m)
+    conn.reply(m.chat, '🦂 *ERRORE:* Impossibile inizializzare i moduli IA.', m)
   }
 }
 
